@@ -1,9 +1,13 @@
 #include <stdio.h>
+
  /**
   * main - Entry point
   *
+  * Description: Print all alphabet letters expect a and q
+  *
   * Return: Always 0 (Success)
   */
+
 int main(void)
 {
 	char c;

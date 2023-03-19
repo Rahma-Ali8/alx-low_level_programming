@@ -3,23 +3,22 @@
 /**
  * main - Entry point
  *
+ * Desciption: print numbers of base16 in lowercase
+ *
  * Return: Always 0 (Success)
  */
 
 int main(void)
 {
-	char c;
-	int num;
+	int digit = 48; /*48: decimal rep of 0*/
 
-	for (num = 0; num < 16; num++)
+	while (digit <= 102) /*102: decimal rep of f*/
 	{
-		if (num < 10)
-			putchar(num + '0');
-	}
-	else
-	{
-		putchar(c);
-		c++;
+		putchar(digit);
+		/* after 9 we jump till 96: */
+		if (digit == 57)
+			digit += 39;
+		digit++
 	}
 	putchar('\n');
 	return (0);
