@@ -1,16 +1,14 @@
-#include <stdio.h>
-
+#include <unistd.h>
 /**
- * main -Entry point
+ * main - Entry point
  *
- * Description: use the write function
- *   size-t write(int fd, const void *buf ,size-t count);
- *
- * Return: 1 (error).
- */
+ * Return: Always 1 (not Success)
+*/
 
 int main(void)
-{	char arr1[]"and that piece of art is useful\" - Dora Korpar, 2015-10-19\n";
-	write(1, arr1, 59);
+{
+	char quo[] = "and that piece of art is useful\" - Dora Korpar, 2015-10-19\n";
+
+	write(1, quo, 59);
 	return (1);
 }
