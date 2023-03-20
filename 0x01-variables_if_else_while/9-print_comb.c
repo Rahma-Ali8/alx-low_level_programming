@@ -1,12 +1,11 @@
 #include <stdio.h>
 
- /**
-  * main - Entry point
-  *
-  * Description: Print all possiple combination of sindle digit numbers
-  *
-  * Return: Always 0 (Success)
- */
+/**
+ * main - Entry point
+ *
+ * Return: Always 0 (Success)
+*/
+
 int main(void)
 {
 		int number;
