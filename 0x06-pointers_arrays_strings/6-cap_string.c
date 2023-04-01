@@ -37,9 +37,9 @@ char *cap_string(char *str)
 
 		while (*str)
 		{
-			if (isDelimit(*str))
+			if (isDelimiter(*str))
 				foundDelimit = 1;
-			else if (isLower(*str))
+			else if (isLower(*str) && foundDelimit)
 			{
 				*str = 32;
 				foundDelimit = 0;
