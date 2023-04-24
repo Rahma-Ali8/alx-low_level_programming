@@ -5,7 +5,8 @@
  * @n: number of arg
  * @...: string to print
  *
- * Return: void*/
+ * Return: void
+*/
 void print_strings(const char *separator, const unsigned int n, ...)
 {
 	int i = n;
@@ -21,7 +22,8 @@ void print_strings(const char *separator, const unsigned int n, ...)
 	va_start(po, n);
 
 	while (i--)
-		printf("%s%s", (str = va_arg(po, char *)) ? str : "(nil)", i ? (separator ? separator : "") : "\n");
+		printf("%s%s", (str = va_arg(po, char *)) ?
+				str : "(nil)", i ? (separator ? separator : "") : "\n");
 
 	va_end(po);
 }
