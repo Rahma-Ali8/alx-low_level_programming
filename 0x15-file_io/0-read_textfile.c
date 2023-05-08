@@ -6,26 +6,35 @@
  * @filename: file to read
  * @letters: number of letters
  *
- * Return: 0
+ * Return: 0 if it is NULL
 */
 
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	char *fpointer;
+	char *fp;
 	ssize_t x;
 	ssize_t y;
 	ssize_t z;
 
-	x = open(filename, O_RDONLY);
-
-	if (x == -1)
+	if (filename == NULL)
 		return (0);
 
-	fpointer = malloc(sizeof(char) * letters);
-	z = read(x, fpointer, letters);
-	y = write(STDOUT_FILENO, fpointer, z);
+	fp = malloc(sizeof(char) * letters);
+	if (fp == NULL)
+		return (0);
+	x = open(filename, O_RDONLY);
+	y = read(x, fp, letters);
+	z = write(STDOUT_FILENO, fp, y);
 
-	free(fpointer);
+	if (x == -1 || y == -1 || z == -1 || z != y)
+	{
+		free(fp);
+		return (0);
+	}
+
+	free(fp);
 	close(x);
-	return (y);
+
+	return (z);
+
 }
