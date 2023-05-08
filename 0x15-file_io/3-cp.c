@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 char *cr(char *file);
-void close(int fp);
+void close_file(int fp);
 
 /**
  * cr - function to allocates 1024 bytes
@@ -30,11 +30,11 @@ char *cr(char *file)
 
 
 /**
- * close - function to close file
+ * close_file - function to close file
  * @fp: file dis to close
 */
 
-void close(int fp)
+void close_file(int fp)
 {
 	int x;
 
@@ -42,7 +42,7 @@ void close(int fp)
 
 	if (x == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: canit close fp %d\n", fp);
+		dprintf(STDERR_FILENO, "Error: can't close fp %d\n", fp);
 		exit(100);
 	}
 }
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	buf = cr(argv[2]);
 	mn = open(argv[1], O_RDONLY);
 	k = read(mn, buf, 1024);
-	el = open(argv[2], O_WRONLY | O_TRUNC, 0664);
+	el = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
 	do {
 		if (mn == -1 || k == -1)
@@ -95,8 +95,8 @@ int main(int argc, char *argv[])
 	} while (k > 0);
 
 	free(buf);
-	close(mn);
-	close(el);
+	close_file(mn);
+	close_file(el);
 
 	return (0);
 }
