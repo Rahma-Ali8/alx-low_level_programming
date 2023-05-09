@@ -1,102 +1,52 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-char *cr(char *file);
-void close_file(int fp);
-
-/**
- * cr - function to allocates 1024 bytes
- * @file: name of file buf
- *
- * Return: pointer new allocate
-*/
-
-char *cr(char *file)
-{
-	char *buf;
-
-	buf = malloc(sizeof(char) * 1024);
-
-	if (buf == NULL)
-	{
-		dprintf(STDERR_FILENO,
-				"Error: can't write to %s\n", file);
-		exit(99);
-	}
-
-	return (buf);
-}
-
+#define MAXSIZE 1204
+#define SE STDERR_FILENO
 
 /**
- * close_file - function to close file
- * @fp: file dis to close
-*/
-
-void close_file(int fp)
-{
-	int x;
-
-	x = close(fp);
-
-	if (x == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: can't close fp %d\n", fp);
-		exit(100);
-	}
-}
-
-/**
- * main -  program that copies the content of a file to another file
- * @argc: number of argument
- * @argv: an array of pointer
- *
- * Return: 0 success
-*/
-
+ * main - main body
+ * @argc: argument count
+ * @argv: argument vector
+ * Return: 0
+ */
 int main(int argc, char *argv[])
 {
-	int mn, el, k, l;
-	char *buf;
+	int ifo, o_fo, i_w, o_w;
+	char buffer[MAXSIZE];
+	mode_t mode;
 
+	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-
-	}
-	buf = cr(argv[2]);
-	mn = open(argv[1], O_RDONLY);
-	k = read(mn, buf, 1024);
-	el = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-
+		dprintf(SE, "Usage: cp file_from file_to\n"), exit(97);
+	ifo = open(argv[1], O_RDONLY);
+	if (ifo == -1)
+		dprintf(SE, "Error: Can't read from file %s\n", argv[1]), exit(98);
+	o_fo = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, mode);
+	if (o_fo == -1)
+		dprintf(SE, "Error: Can't write to %s\n", argv[2]), exit(99);
 	do {
-		if (mn == -1 || k == -1)
+		i_w = read(ifo, buffer, MAXSIZE);
+		if (i_w == -1)
 		{
-			dprintf(STDERR_FILENO,
-				"Error: can't read from file %s\n", argv[1]);
-			free(buf);
+			dprintf(SE, "Error: Can't read from file %s\n", argv[1]);
 			exit(98);
 		}
-
-		l = write(el, buf, k);
-		if (el == -1 || l == -1)
+		if (i_w > 0)
 		{
-			dprintf(STDERR_FILENO,
-				"Error: can't write to %s\n", argv[2]);
-			free(buf);
-			exit(99);
+			o_w = write(o_fo, buffer, (ssize_t)i_w);
+			if (o_w == -1)
+			{
+				dprintf(SE, "Error: Can't write to %s\n", argv[2]);
+				exit(99);
+			}
 		}
-		k = read(mn, buf 1024);
-		el = open(argv[2], O_WRONLY | O_APPEND);
-
-
-	} while (k > 0);
-
-	free(buf);
-	close_file(mn);
-	close_file(el);
-
+	} while (i_w > 0);
+	i_w = close(ifo);
+	if (i_w == -1)
+		dprintf(SE, "Error: Can't close fd %d\n", ifo), exit(100);
+	o_w = close(o_fo);
+	if (o_w == -1)
+		dprintf(SE, "Error: Can't close fd %d\n", o_fo), exit(100);
 	return (0);
 }
