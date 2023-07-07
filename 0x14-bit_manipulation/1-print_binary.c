@@ -10,7 +10,7 @@
 
 void print_binary(unsigned long int n)
 {
-	unsigned int x;
+	unsigned long int x;
 
 	for (x = 1 << 7; x > 0; x /= 2)
 		(n & x) ? printf("1") : printf("0");
