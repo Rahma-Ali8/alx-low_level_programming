@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <main.h>
+#include <string.h>
 
 /**
  * binary_to_uint - to convert biary num string to unsigned int
@@ -9,26 +10,24 @@
 */
 
 unsigned int binary_to_uint(const char *b)
-{
-	unsigned int x = 2;
-	unsigned int i, k;
-	unsigned int len;
 
-	if (b == NULL)
-		return (0);
+	int slen = strlen(b);
+	int num1 = 0;
+	int num2 = 1;
+	int i;
 
-	len = strlen(b);
 
-	for (k = len; k > 0; k--)
+	for (i = (slen - 1); i >= 0; i--)
 	{
-		if (b[k] != '0' || b[k] != '1')
-			return (0);
-		else if (b[k] == '1')
-			i += atoi(b) * x;
-		x *= 2;
+		if (b[i == '1'])
+			num1 += num2;
 
+		num2 *= 2;
+
+
+	
 	}
-	return (i);
+	return (num2);
 
 
 
