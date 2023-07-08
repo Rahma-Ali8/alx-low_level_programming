@@ -12,22 +12,20 @@
 unsigned int binary_to_uint(const char *b)
 
 	int slen = strlen(b);
-	int num1 = 0;
-	int num2 = 1;
+	int sum = 0;
+	int num = 1;
 	int i;
 
 
 	for (i = (slen - 1); i >= 0; i--)
 	{
-		if (b[i == '1'])
-			num1 += num2;
-
-		num2 *= 2;
+		if (b[i] == '1')sum += num;
+		num *= 2;
 
 
 	
 	}
-	return (num1);
+	return (sum);
 
 
 
